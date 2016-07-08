@@ -1,5 +1,5 @@
 {
-    "name": "present-dv/yii2-uploadimage",
+    "name": "dkhlystov/yii2-uploadimage",
     "description": "Image upload extension for Yii PHP Framework Version 2",
     "type": "yii2-extension",
     "keywords": ["yii2","image","upload"],
