@@ -71,7 +71,7 @@ If you need to create thumbnail use `thumbKey` property. To limit image count us
 
 ### Widget size
 
-Default size of every items in widget is **112&times;84**. If you want to render widget with other size use `width` and `height` properties.
+Default size of every item in widget is **112&times;84**. If you want to render widget with other size use `width` and `height` properties.
 ```php
 <?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className(), [
     'width' => 100,
