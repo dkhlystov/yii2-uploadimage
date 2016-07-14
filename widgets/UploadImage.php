@@ -2,39 +2,20 @@
 
 namespace uploadimage\widgets;
 
-use yii\base\Widget;
+use yii\helpers\Html;
 
-class UploadWidget extends Widget
+use uploadimage\components\Loader;
+
+/**
+ * Image upload widget for upload single image.
+ */
+class UploadImage extends BaseUploadImage
 {
 
 	/**
-	 * @var Model The data model that this widget is associated with.
+	 * @var string Image thumb attribute name.
 	 */
-	public $model;
-
-	/**
-	 * @var string The model attribute that this widget is associated with.
-	 */
-	public $attribute;
-
-	/**
-	 * @var string The input name. This must be set if [[model]] and [[attribute]] are not set.
-	 */
-	public $name;
-
-	/**
-	 * @var string The input value.
-	 */
-	public $value;
-
-	public $fileAttribute;
-
 	public $thumbAttribute;
-
-	/**
-	 * @var integer Max image count. Unlimited if set to zero.
-	 */
-	public $max = 0;
 
 	/**
 	 * @inheritdoc
@@ -43,54 +24,73 @@ class UploadWidget extends Widget
 	{
 		parent::init();
 
-		if ($this->hasModel()) {
-			$this->checkAttributes();
-		} elseif ($this->name === null) {
-			throw new InvalidConfigException("Either 'name', or 'model' and 'attribute' properties must be specified.");
-		}
+		$this->_fileKey = $this->attribute;
 
-		$this->checkMaxFileSize();
-
-		UploadImageAsset::register($this->view);
+		if ($this->thumbAttribute !== null)
+			$this->_thumbKey = $this->thumbAttribute;
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function run()
+	protected function getItems()
 	{
-
+		$attr = $this->attribute;
+		if (empty($this->model->$attr))
+			return [];
+		
+		return [$this->model];
 	}
 
 	/**
-	 * Whether this widget is associated with a data model.
-	 * @return boolean
+	 * @inheritdoc
 	 */
-	protected function hasModel()
+	protected function getItemFile($item)
 	{
-		return $this->model instanceof Model && $this->attribute !== null;
+		$attr = $this->attribute;
+
+		return $item->$attr;
 	}
 
 	/**
-	 * No need addition arrays in form names if there are only one image and [[fileAttribute]] is not set.
-	 * @return void
+	 * @inheritdoc
 	 */
-	protected function checkAttributes()
+	protected function getItemThumb($item)
 	{
-		if ($this->max == 1 && ($this->fileAttribute === null)) {
-			$this->fileAttribute = $this->attribute;
-			$this->attribute = null;
-		}
+		$thumbAttr = $this->thumbAttribute;
+
+		return $thumbAttr === null ? null : $item->$thumbAttr;
 	}
 
 	/**
-	 * Checking maxFileSize property in according the ini settings.
-	 * @return void
+	 * @inheritdoc
 	 */
-	protected function checkMaxFileSize()
+	protected function getItemBaseName($item)
 	{
-		$upload_max_filesize = ini_get('upload_max_filesize');
-		var_dump($upload_max_filesize); die();
+		return $this->model->formName();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function renderLoader()
+	{
+		$attr = $this->attribute;
+		$hidden = !empty($this->model->$attr);
+
+		return Loader::widget([
+			'baseName' => $this->getItemBaseName(false),
+			'fileKey' => $this->_fileKey,
+			'thumbKey' => $this->_thumbKey,
+			'data' => $this->getItemData(null),
+
+			'width' => $this->width,
+			'height' => $this->height,
+			'hidden' => $hidden,
+			'disabledInput' => $hidden,
+
+			'fileInputName' => $this->getFileInputName(),
+		]);
 	}
 
 }
