@@ -5,8 +5,8 @@ $(function() {
 	//======
 	//events
 
-	$(document).on('click', '.uploadimage-loader', uploadImageClick);
-	$(document).on('change', '.uploadimage-widget :file', uploadImageChange);
+	$(document).on('click', '.uploadimage-loader', loaderClick);
+	$(document).on('change', '.uploadimage-widget :file', fileChange);
 	$(document).on('click', '.uploadimage-image', imageClick);
 	$(document).on('mousedown', '.uploadimage-item.crop .uploadimage-image', imageCropMouseDown);
 	$(document).on('touchstart', '.uploadimage-item.crop .uploadimage-image', imageCropMouseDown);
@@ -19,13 +19,13 @@ $(function() {
 	//==============
 	//event handlers
 
-	function uploadImageClick(e)
+	function loaderClick(e)
 	{
 		e.preventDefault();
 		$(this).closest('.uploadimage-item').find(':file').click();
 	};
 
-	function uploadImageChange(e)
+	function fileChange(e)
 	{
 		var $uploadimage = $(this).closest('.uploadimage-widget'),
 			can = true;
