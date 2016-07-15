@@ -1,7 +1,3 @@
-# yii2-uploadimage
-
-UploadImage widget for Yii PHP Framework Version 2
-
 # Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
