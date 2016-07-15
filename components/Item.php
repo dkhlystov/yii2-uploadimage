@@ -53,6 +53,16 @@ class Item extends Widget
 
 
 	/**
+	 * @var array Custom buttons.
+	 * [[label]] string Button label, required.
+	 * [[title]] string Button title (hint).
+	 * [[active]] boolean If set to true, button will be rendered as active.
+	 */
+	public $buttons = [];
+
+
+
+	/**
 	 * @var string If item not uploaded, this is name of original file stored in system.
 	 */
 	public $originalFile;
@@ -325,9 +335,23 @@ class Item extends Widget
 		$buttons .= Html::tag('div', implode('', $group), ['class' => 'uploadimage-btngroup actions']);
 
 		//custom
-		// $group = [];
-		// $group[] = Html::a('<i class="fa fa-star"></i>', '#', ['class' => 'uploadimage-btn']);
-		// $buttons .= Html::tag('div', implode('', $group), ['class' => 'uploadimage-btngroup custom']);
+		$group = [];
+		foreach ($this->buttons as $id => $button) {
+			$button = array_merge([
+				'title' => '',
+				'active' => false,
+			], $button);
+
+			$options = ['class' => 'uploadimage-btn', 'data-id' => $id];
+			if (!empty($button['title']))
+				$options['title'] = $button['title'];
+			if ($button['active'])
+				Html::addCssClass($options, 'active');
+
+			$group[] = Html::a($button['label'], '#', $options);
+		}
+		if (!empty($group))
+			$buttons .= Html::tag('div', implode('', $group), ['class' => 'uploadimage-btngroup custom']);
 
 		return $buttons;
 	}

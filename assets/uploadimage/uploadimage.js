@@ -13,6 +13,7 @@ $(function() {
 	$(document).on('click', '.uploadimage-btn.remove', removeClick);
 	$(document).on('click', '.uploadimage-btn.rotate', rotateClick);
 	$(document).on('click', '.uploadimage-btn.crop', cropClick);
+	$(document).on('click', '.uploadimage-btngroup.custom .uploadimage-btn', customBtnClick);
 	$(window).resize(windowResize);
 
 	//==============
@@ -176,6 +177,15 @@ $(function() {
 		$(window).off('touchcancel', windowCropMouseUp);
 
 		itemCrop($drag.closest('.uploadimage-item'));
+	};
+
+	function customBtnClick(e)
+	{
+		e.preventDefault();
+
+		var $this = $(this);
+
+		$this.closest('.uploadimage-widget').trigger('ui-btnclick', customBtnUi($this));
 	};
 
 	//=============
@@ -559,6 +569,69 @@ $(function() {
 		}, function(data) {
 			itemApply($item, $(data), false);
 		});
+	};
+
+	function customBtnUi($button)
+	{
+		var $item = $button.closest('.uploadimage-item');
+		return {
+			'id': $button.data('id'),
+			'button': $button[0],
+			'item': customBtnItem($item),
+			'getAllItems': function() {
+				var items = [];
+
+				$item.closest('.uploadimage-widget').find('.uploadimage-item').each(function() {
+					var $item = $(this);
+					if ($item.find('.uploadimage-loader').length == 0)
+						items.push(customBtnItem($item));
+				});
+
+				return items;
+			}
+		};
+	};
+
+	function customBtnItem($item)
+	{
+		return {
+			'data': function(name, value) {
+				var data = {};
+
+				if (typeof(name) == 'string') {
+					if (value === undefined)
+						return customItemData($item, name).val();
+
+					data[name] = value;
+				} else {
+					data = name;
+				};
+
+				if (!$.isPlainObject(data))
+					return;
+
+				$.each(data, function(name, value) {
+					customItemData($item, name).val(value);
+				});
+			}
+		};
+	};
+
+	function customItemData($item, name)
+	{
+		name = name.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+
+		var regexp = new RegExp('\\[' + name + '\\]$'),
+			$input = $();
+
+		$item.find('input').each(function() {
+			if (regexp.test(this.name)) {
+				$input = $(this);
+				return false;
+			}
+		});
+
+		return $input;
 	};
 
 });

@@ -198,6 +198,7 @@ class ImageController extends Controller
 			'data' => $settings['data'],
 			'quality' => $settings['quality'],
 			'uploadPath' => $settings['uploadPath'],
+			'buttons' => $settings['buttons'],
 		]);
 	}
 

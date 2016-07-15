@@ -93,6 +93,18 @@ class BaseUploadImage extends Widget
 
 
 	/**
+	 * @var array Custom buttons. Keys is button identifiers, and values is button properties.
+	 * Every button may have some properties:
+	 * [[label]] string|Closure Button label, required.
+	 * [[title]] string|Closure Button title.
+	 * [[active]] boolean|Closure If set to true, button will be rendered as active.
+	 * For closure use [[function($item)]], where $item is current item (null by default).
+	 */
+	public $buttons = [];
+
+
+
+	/**
 	 * @var string Name of file input.
 	 */
 	private $_fileInputName;
@@ -139,6 +151,8 @@ class BaseUploadImage extends Widget
 
 		$options = array_merge($this->options, $this->getWidgetData());
 		Html::addCssClass($options, 'uploadimage-widget');
+		if (!isset($options['id']))
+			$options['id'] = $this->id;
 
 		echo Html::tag('div', $items . $loader, $options);
 	}
@@ -212,6 +226,7 @@ class BaseUploadImage extends Widget
 				'thumbHeight' => $this->thumbHeight,
 				'baseName' => $this->getItemBaseName($item),
 				'data' => $this->getItemData($item),
+				'buttons' => $this->getItemButtons($item),
 				'quality' => $this->quality,
 				'uploadPath' => $this->uploadPath,
 				'baseRoute' => $this->getBaseRoute(),
@@ -298,6 +313,7 @@ class BaseUploadImage extends Widget
 			'height' => $this->height,
 			'baseName' => $this->getItemBaseName(null),
 			'data' => $this->getItemData(null),
+			'buttons' => $this->getItemButtons(null),
 		];
 	}
 
@@ -374,6 +390,23 @@ class BaseUploadImage extends Widget
 			return $itemData($item);
 
 		return [];
+	}
+
+	/**
+	 * Return item buttons. For new uploaded images [[$item]] is null.
+	 * @param Model|array|false|null $item Item for what base name will returned. Item is false for Loader and is null for default.
+	 * @return array
+	 */
+	protected function getItemButtons($item)
+	{
+		return array_map(function($button) use ($item) {
+			return array_map(function($v) use ($item) {
+				if ($v instanceof \Closure)
+					return $v($item);
+
+				return $v;
+			}, $button);
+		}, $this->buttons);
 	}
 
 }
