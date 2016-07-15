@@ -183,9 +183,14 @@ $(function() {
 	{
 		e.preventDefault();
 
-		var $this = $(this);
+		var $this = $(this),
+			$item = $this.closest('.uploadimage-item');
 
-		$this.closest('.uploadimage-widget').trigger('ui-btnclick', customBtnUi($this));
+		$this.closest('.uploadimage-widget').trigger('ui-btnclick', [
+			$this.data('id'),
+			customItem($item),
+			customOther($item)
+		]);
 	};
 
 	//=============
@@ -571,36 +576,28 @@ $(function() {
 		});
 	};
 
-	function customBtnUi($button)
+	function customItem($item)
 	{
-		var $item = $button.closest('.uploadimage-item');
-		return {
-			'id': $button.data('id'),
-			'button': $button[0],
-			'item': customBtnItem($item),
-			'getAllItems': function() {
-				var items = [];
-
-				$item.closest('.uploadimage-widget').find('.uploadimage-item').each(function() {
-					var $item = $(this);
-					if ($item.find('.uploadimage-loader').length == 0)
-						items.push(customBtnItem($item));
-				});
-
-				return items;
-			}
-		};
+		return customManage($item);
 	};
 
-	function customBtnItem($item)
+	function customOther($item)
+	{
+		return customManage($item.closest('.uploadimage-widget').find('.uploadimage-item[data-token]').not($item));
+	};
+
+	function customManage($items)
 	{
 		return {
+			'button': function(id) {
+				return $items.find('.uploadimage-btn[data-id="' + id + '"]');
+			},
 			'data': function(name, value) {
 				var data = {};
 
 				if (typeof(name) == 'string') {
 					if (value === undefined)
-						return customItemData($item, name).val();
+						return customItemData($items, name).val();
 
 					data[name] = value;
 				} else {
@@ -611,20 +608,20 @@ $(function() {
 					return;
 
 				$.each(data, function(name, value) {
-					customItemData($item, name).val(value);
+					customItemData($items, name).val(value);
 				});
 			}
 		};
 	};
 
-	function customItemData($item, name)
+	function customItemData($items, name)
 	{
 		name = name.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 
 		var regexp = new RegExp('\\[' + name + '\\]$'),
 			$input = $();
 
-		$item.find('input').each(function() {
+		$items.find('input').each(function() {
 			if (regexp.test(this.name)) {
 				$input = $(this);
 				return false;
