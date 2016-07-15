@@ -88,7 +88,7 @@ class BaseUploadImage extends Widget
 	 * @var array|Closure Extra data for image item [[function($item)]]. Should return array.
 	 * If Closure, [[$item]] is null for default values.
 	 */
-	public $itemData;
+	public $data;
 
 
 
@@ -386,13 +386,13 @@ class BaseUploadImage extends Widget
 	 */
 	protected function getItemData($item)
 	{
-		$itemData = $this->itemData;
+		$data = $this->data;
 
-		if (is_array($itemData))
-			return $itemData;
+		if (is_array($data))
+			return $data;
 
-		if ($itemData instanceof \Closure)
-			return $itemData($item);
+		if ($data instanceof \Closure)
+			return $data($item);
 
 		return [];
 	}

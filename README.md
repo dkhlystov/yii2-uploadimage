@@ -2,7 +2,7 @@
 
 UploadImage widget for Yii PHP Framework Version 2
 
-## Installation
+# Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
@@ -21,7 +21,7 @@ or add
 to the require section of your `composer.json` file.
 
 
-## Usage
+# Usage
 
 For using widget at first you need to add `uploadimage\Module` to your application config:
 
@@ -32,7 +32,7 @@ For using widget at first you need to add `uploadimage\Module` to your applicati
     ],
 ```
 
-### Single image
+## Single image
 
 Upload single image to model attribute:
 
@@ -59,7 +59,7 @@ If thumbnail needed:
 ]); ?>
 ```
 
-### Multiple images
+## Multiple images
 
 Upload multiple images as array to model attribute. Property `fileKey` is required:
 
@@ -73,7 +73,7 @@ Upload multiple images as array to model attribute. Property `fileKey` is requir
 
 If you need to create thumbnail use `thumbKey` property. To limit image count use `maxCount` property.
 
-### Widget size
+## Widget size
 
 Default size of every item in widget is **112&times;84**. If you want to render widget with other size use `width` and `height` properties.
 
@@ -84,7 +84,7 @@ Default size of every item in widget is **112&times;84**. If you want to render 
 ]) ?>
 ```
 
-### Maximum image size
+## Maximum image size
 
 All images will be optimized while uploading. By default maximun width of uploaded image is **1000** and heigh is **750**. To change this values use `maxWidth` and `maxHeight` properties.
 
@@ -95,7 +95,7 @@ All images will be optimized while uploading. By default maximun width of upload
 ]) ?>
 ```
 
-### Thumbnail size
+## Thumbnail size
 
 When thumbnails uses, its size is similar to widget item size. To change it, use `thumbWidth` and `thumbHeight` properties.
 
@@ -107,16 +107,16 @@ When thumbnails uses, its size is similar to widget item size. To change it, use
 ]) ?>
 ```
 
-### Adding extra data
+## Adding extra data
 
-Use `itemData` property to add extra data to every image item in widget. You can use simple array or `Closure` for this property:
+Use `data` property to add extra data to every image item in widget. You can use simple array or `Closure` for this property:
 
 ```php
 <?= \uploadimage\widgets\UploadImages::widget([
     'model' => $model,
     'attribute' => 'images',
     'fileKey' => 'file',
-    'itemData' => function($item) {
+    'data' => function($item) {
         return [
             'id' => $item['id'],
             'description' => $item['description'],
@@ -125,11 +125,11 @@ Use `itemData` property to add extra data to every image item in widget. You can
 ]) ?>
 ```
 
-### Custom buttons support
+## Custom buttons support
 
 For working with buttons there are two steps: at first you should to declare buttons on server-side, and then you need to handle events from buttons on client-side.
 
-#### server-side
+### server-side
 
 To add custom buttons use `buttons` property. This is array where key is button identifier and value is buttons configuration.
 ```php
@@ -138,6 +138,9 @@ To add custom buttons use `buttons` property. This is array where key is button 
     'attribute' => 'images',
     'id' => 'images',
     'fileKey' => 'file',
+    'data' => function($item) {
+        return ['main' => $item['main']];
+    },
     'buttons' => [
         'main' => [
             'label' => '<i class="fa fa-star"></i>',
@@ -160,7 +163,7 @@ If property sets as `Closure`, `$item` parameter is item for which the buttons a
 
 Note that you can use **Font Awesome** icons, because its in reqirements and will be installed automatically.
 
-#### client-side
+### client-side
 
 In your javascript attach handler for `ui-btnclick` event to widget. In handler there are `id`, `item` and `other` parameters, that represents API for working with widget items.
 
@@ -186,7 +189,7 @@ $(document).on('ui-btnclick', '#images', imagesBtnClick(e, id, item, other) {
 });
 ```
 
-### Other properties
+## Other properties
 
 By default, all images will be uploaded to `/upload` directory in your web root. If you want to change it, use `uploadPath` property.
 
