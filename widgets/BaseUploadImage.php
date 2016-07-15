@@ -105,6 +105,26 @@ class BaseUploadImage extends Widget
 
 
 	/**
+	 * @var string Message that shows to user when file size exceed [[$maxFileSize]] property.
+	 * Substring {files} will be replaced with file names in which error occurs.
+	 */
+	public $messageMaxSize;
+
+	/**
+	 * @var string Message that shows to user when file format is not supports.
+	 * Substring {files} will be replaced with file names in which error occurs.
+	 */
+	public $messageFormat;
+
+	/**
+	 * @var string Message that will shown to user when some other error is occured.
+	 * Substring {files} will be replaced with file names in which error occurs.
+	 */
+	public $messageOther;
+
+
+
+	/**
 	 * @var string Name of file input.
 	 */
 	private $_fileInputName;
@@ -142,6 +162,7 @@ class BaseUploadImage extends Widget
 
 		$this->checkThumbSize();
 		$this->checkMaxFileSize();
+		$this->prepareMessags();
 
 		UploadImageAsset::register($this->getView());
 	}
@@ -212,6 +233,8 @@ class BaseUploadImage extends Widget
 
 		if ($this->uploadPath === null)
 			$this->uploadPath = $uploadPath;
+
+		\uploadimage\Module::addTranslation();
 	}
 
 	/**
@@ -255,6 +278,22 @@ class BaseUploadImage extends Widget
 	}
 
 	/**
+	 * Prepar error messages
+	 * @return void
+	 */
+	protected function prepareMessags()
+	{
+		if ($this->messageMaxSize === null)
+			$this->messageMaxSize = Yii::t('uploadimage', 'The size of files {files} exceeds the allowable ({maxFileSize} MB).', ['maxFileSize' => $this->maxFileSize]);
+
+		if ($this->messageFormat === null)
+			$this->messageFormat = Yii::t('uploadimage', 'The format of files {files} is not supported.');
+
+		if ($this->messageOther === null)
+			$this->messageOther = Yii::t('uploadimage', 'An error occurred while uploading files {files}.');
+	}
+
+	/**
 	 * Render image items
 	 * @return string
 	 */
@@ -294,10 +333,10 @@ class BaseUploadImage extends Widget
 			'data-url' => Url::toRoute([$this->_baseRoute . 'upload', 'token' => $this->getToken()]),
 			'data-max-size' => $this->maxFileSize * 1024 * 1024,
 			'data-max-count' => 1,
-			'data-msg-max-size' => 'Размер файла(ов) {files} превышает допустимый (' . $this->maxFileSize . ' MB).',
+			'data-msg-max-size' => $this->messageMaxSize,
 			'data-msg-max-count' => '',
-			'data-msg-format' => 'Формат файла(ов) {files} не поддерживается.',
-			'data-msg-other' => 'Возникла ошибка при загрузке файла(ов) {files}.',
+			'data-msg-format' => $this->messageFormat,
+			'data-msg-other' => $this->messageOther,
 		];
 	}
 

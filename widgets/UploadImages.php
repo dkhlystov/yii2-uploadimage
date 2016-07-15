@@ -2,6 +2,7 @@
 
 namespace uploadimage\widgets;
 
+use Yii;
 use yii\base\InvalidConfigException;
 
 use uploadimage\components\Loader;
@@ -28,6 +29,12 @@ class UploadImages extends BaseUploadImage
 	public $maxCount = 0;
 
 	/**
+	 * @var string Message that shows to user when count of uploaded files exceed [[$maxCount]] property.
+	 * Substring {files} will be replaced with file names in which error occurs.
+	 */
+	public $messageMaxCount;
+
+	/**
 	 * @var array Image items returned by [[getItems()]].
 	 */
 	private $_items;
@@ -40,12 +47,23 @@ class UploadImages extends BaseUploadImage
 		parent::init();
 
 		if ($this->fileKey === null)
-			throw new InvalidConfigException("'fileKey' property must be specified.");
+			throw new InvalidConfigException("Property 'fileKey' must be specified.");
 
 		$this->_fileKey = $this->fileKey;
 
 		if ($this->thumbKey !== null)
 			$this->_thumbKey = $this->thumbKey;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function prepareMessags()
+	{
+		parent::prepareMessags();
+
+		if ($this->messageMaxCount === null)
+			$this->messageMaxCount = Yii::t('uploadimage', 'You can upload up to {maxCount} files. The files {files} were not uploaded.', ['maxCount' => $this->maxCount]);
 	}
 
 	/**
@@ -104,7 +122,7 @@ class UploadImages extends BaseUploadImage
 	{
 		return array_merge(parent::getWidgetData(), [
 			'data-max-count' => $this->maxCount,
-			'data-msg-max-count' => 'Вы можете загрузить не более ' . $this->maxCount . ' файлов. Файл(ы) {files} не были загружен.',
+			'data-msg-max-count' => $this->messageMaxCount,
 		]);
 	}
 
