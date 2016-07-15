@@ -187,6 +187,6 @@ $(document).on('ui-btnclick', '#images', imagesBtnClick(e, id, item, other) {
 
 ## Other properties
 
-By default, all images will be uploaded to `/upload` directory in your web root. If you want to change it, use `uploadPath` property.
+By default, all images will be uploaded to `/upload` directory in your web root. If you want to change it, use `uploadPath` property. To set this path globally use `uploadPath` property in application module.
 
 You can change image quality (for JPEG only) by setting `quality` property. Default quality is **80**.

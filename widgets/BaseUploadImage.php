@@ -80,9 +80,9 @@ class BaseUploadImage extends Widget
 	public $quality = 80;
 
 	/**
-	 * @var string Path to directory where images will be upload relative to web root.
+	 * @see \uploadimage\Module::$uploadPath
 	 */
-	public $uploadPath = '/upload';
+	public $uploadPath;
 
 	/**
 	 * @var array|Closure Extra data for image item [[function($item)]]. Should return array.
@@ -121,6 +121,13 @@ class BaseUploadImage extends Widget
 	 */
 	protected $_thumbKey;
 
+
+
+	/**
+	 * @var string Base route for working width images.
+	 */
+	private $_baseRoute;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -130,6 +137,8 @@ class BaseUploadImage extends Widget
 
 		if (!$this->hasModel())
 			throw new InvalidConfigException("Properties 'model' and 'attribute' must be specified.");
+
+		$this->checkModule();
 
 		$this->checkThumbSize();
 		$this->checkMaxFileSize();
@@ -164,6 +173,45 @@ class BaseUploadImage extends Widget
 	private function hasModel()
 	{
 		return $this->model instanceof Model && $this->attribute !== null;
+	}
+
+	/**
+	 * Check module. Determine [[_baseRoute]] and [[uploadPath]] if needed.
+	 * @return void
+	 */
+	private function checkModule()
+	{
+		$hasModule = false;
+		$uploadPath = '/upload';
+
+		foreach (Yii::$app->modules as $id => $module) {
+			if ($module instanceof \yii\base\Module) {
+
+				if ($hasModule = ($module instanceof \uploadimage\Module))
+					$uploadPath = $module->uploadPath;
+
+			} elseif (is_array($module)) {
+
+				if ($hasModule = ($module['class'] === 'uploadimage\Module') && isset($module['uploadPath']))
+					$uploadPath = $module['uploadPath'];
+
+			} else {
+
+				$hasModule = ($module === 'uploadimage\Module');
+
+			}
+
+			if ($hasModule) {
+				$this->_baseRoute = '/' . $id . '/image/';
+				break;
+			}
+		}
+
+		if (!$hasModule)
+			throw new InvalidConfigException("UploadImage module is not declared.");
+
+		if ($this->uploadPath === null)
+			$this->uploadPath = $uploadPath;
 	}
 
 	/**
@@ -229,7 +277,7 @@ class BaseUploadImage extends Widget
 				'buttons' => $this->getItemButtons($item),
 				'quality' => $this->quality,
 				'uploadPath' => $this->uploadPath,
-				'baseRoute' => $this->getBaseRoute(),
+				'baseRoute' => $this->_baseRoute,
 			]);
 		}
 
@@ -243,7 +291,7 @@ class BaseUploadImage extends Widget
 	protected function getWidgetData()
 	{
 		return [
-			'data-url' => Url::toRoute([$this->getBaseRoute() . 'upload', 'token' => $this->getToken()]),
+			'data-url' => Url::toRoute([$this->_baseRoute . 'upload', 'token' => $this->getToken()]),
 			'data-max-size' => $this->maxFileSize * 1024 * 1024,
 			'data-max-count' => 1,
 			'data-msg-max-size' => 'Размер файла(ов) {files} превышает допустимый (' . $this->maxFileSize . ' MB).',
@@ -251,35 +299,6 @@ class BaseUploadImage extends Widget
 			'data-msg-format' => 'Формат файла(ов) {files} не поддерживается.',
 			'data-msg-other' => 'Возникла ошибка при загрузке файла(ов) {files}.',
 		];
-	}
-
-	/**
-	 * Making url for images uploading.
-	 * @return string
-	 */
-	protected function getBaseRoute()
-	{
-		$route = '';
-
-		foreach (Yii::$app->modules as $id => $module) {
-			if ($module instanceof \yii\base\Module) {
-				$class = $module->className();
-			} elseif (is_array($module)) {
-				$class = $module['class'];
-			} else {
-				$class = $module;
-			}
-
-			if ($class === 'uploadimage\Module') {
-				$route = '/' . $id . '/image/';
-				break;
-			}
-		}
-
-		if (empty($route))
-			throw new InvalidConfigException("UploadImage module is not declared.");
-
-		return $route;
 	}
 
 	/**
