@@ -371,7 +371,7 @@ class BaseUploadImage extends Widget
 
 	/**
 	 * Return item base name. For new uploaded images [[$item]] is null.
-	 * @param Model|array|false|null $item Item for what base name will returned. Item is false for Loader and is null for default.
+	 * @param Model|array|false|null $item Item for what base name will returned. Item is false for Loader and is null for new item.
 	 * @return string
 	 */
 	protected function getItemBaseName($item)
@@ -379,6 +379,11 @@ class BaseUploadImage extends Widget
 		throw new \Exception('Function "getItemBaseName" is not implemented.');
 	}
 
+	/**
+	 * Return item data. For new uploaded images [[$item]] is null.
+	 * @param Model|array|null $item Item for what data will returned. Item is null for new item.
+	 * @return array
+	 */
 	protected function getItemData($item)
 	{
 		$itemData = $this->itemData;
@@ -394,7 +399,7 @@ class BaseUploadImage extends Widget
 
 	/**
 	 * Return item buttons. For new uploaded images [[$item]] is null.
-	 * @param Model|array|false|null $item Item for what base name will returned. Item is false for Loader and is null for default.
+	 * @param Model|array|null $item Item for what buttons will returned. Item is null for new item.
 	 * @return array
 	 */
 	protected function getItemButtons($item)
