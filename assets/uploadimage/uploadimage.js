@@ -437,23 +437,6 @@ $(function() {
 		});
 	};
 
-	function itemRemove($item)
-	{
-		var $loader = $item.closest('.uploadimage-widget').find('.uploadimage-loader').closest('.uploadimage-item');
-
-		$.get($item.find('.uploadimage-btn.remove').attr('href'));
-
-		$item.remove();
-		loaderShow($loader);
-	};
-
-	function itemRotate($item)
-	{
-		$.get($item.find('.uploadimage-btn.rotate').attr('href'), function(data) {
-			itemApply($item, $(data));
-		});
-	};
-
 	function itemApply($item, $data, initCrop)
 	{
 		var $image = $item.find('.uploadimage-image'),
@@ -481,10 +464,40 @@ $(function() {
 		$item.find('a.uploadimage-btn').each(function() {
 			this.href = this.href.replace(/(token=)[\da-f]+/i, '$1' + token);
 		});
+
+		//unblocking
+		$item.removeData('blocked');
+	};
+
+	function itemRemove($item)
+	{
+		if ($item.data('blocked'))
+			return;
+
+		var $loader = $item.closest('.uploadimage-widget').find('.uploadimage-loader').closest('.uploadimage-item');
+
+		$.get($item.find('.uploadimage-btn.remove').attr('href'));
+
+		$item.remove();
+		loaderShow($loader);
+	};
+
+	function itemRotate($item)
+	{
+		if ($item.data('blocked'))
+			return;
+
+		$item.data('blocked', true);
+		$.get($item.find('.uploadimage-btn.rotate').attr('href'), function(data) {
+			itemApply($item, $(data));
+		});
 	};
 
 	function itemCropEnable($item)
 	{
+		if ($item.data('blocked'))
+			return;
+
 		$item.addClass('crop').find('.uploadimage-btn.crop').addClass('active');
 
 		var $image = $item.find('.uploadimage-image'),
@@ -568,6 +581,7 @@ $(function() {
 			if (y === undefined) y = p.top;
 		}
 
+		$item.data('blocked', true);
 		$.get($item.find('.uploadimage-btn.crop').attr('href'), {
 			'x': -Math.round(x * scale),
 			'y': -Math.round(y * scale)
