@@ -189,6 +189,8 @@ $(document).on('ui-btnclick', '#images', imagesBtnClick(e, id, item, other) {
 
 By default, all images will be uploaded to `/upload` directory in your web root. If you want to change it, use `uploadPath` property. To set this path globally use `uploadPath` property in application module.
 
+To restrict the size of files uploaded by user, use `maxFileSize` property. Set in megabytes. To set its globally use `maxFileSize` property in application module.
+
 You can change image quality (for JPEG only) by setting `quality` property. Default quality is **80**.
 
 You can specify custom error messages with proprties:
