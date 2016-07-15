@@ -198,3 +198,19 @@
 	opacity: 0;
 	position: absolute;
 }
+
+
+
+/* progress */
+.uploadimage-progress {
+	height: 12px;
+	left: 3px;
+	position: absolute;
+	right: 3px;
+	bottom: 3px;
+}
+.uploadimage-progress > div {
+	background-color: #3879d9;
+	height: 100%;
+	width: 0;
+}

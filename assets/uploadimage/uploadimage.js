@@ -267,6 +267,9 @@ $(function() {
 
 		$imageItem.insertBefore($loaderItem);
 
+		if (('upload' in xhr) && ('onprogress' in xhr.upload))
+			uploadImageProgress($imageItem, xhr, file);
+
 		formData.append(name, file);
 
 		xhr.onreadystatechange = function() {
@@ -294,6 +297,17 @@ $(function() {
 
 		xhr.open('POST', url, true);
 		xhr.send(formData);
+	};
+
+	function uploadImageProgress($item, xhr, file)
+	{
+		$item.append('<div class="uploadimage-progress"><div /></div>');
+
+		var $pos = $item.find('.uploadimage-progress > div');
+
+		xhr.upload.onprogress = function(e) {
+			$pos.css('width', (e.loaded / e.total * 100) + '%');
+		};
 	};
 
 	function itemSetIndex($item)
