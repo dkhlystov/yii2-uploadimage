@@ -47,6 +47,12 @@
 	display: inline-block;
 	vertical-align: middle;
 }
+.uploadimage-loader.loading {
+	background: #f5f5f5 url('loading.gif') center center no-repeat;
+}
+.uploadimage-loader.loading i {
+	display: none;
+}
 
 
 

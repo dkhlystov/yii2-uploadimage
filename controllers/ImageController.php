@@ -38,6 +38,7 @@ class ImageController extends Controller
 		$errorFormat = [];
 		$errorOther = [];
 		$items = [];
+		$names = [];
 
 		UploadImageHelper::$uploadPath = $settings['uploadPath'];
 
@@ -58,10 +59,12 @@ class ImageController extends Controller
 			}
 
 			$items[] = $this->upload($settings, $file);
+			$names[] = $file->name;
 		}
 
 		return Json::encode([
 			'items' => $items,
+			'names' => $names,
 			'errorMaxSize' => $errorMaxSize,
 			'errorFormat' => $errorFormat,
 			'errorOther' => $errorOther,

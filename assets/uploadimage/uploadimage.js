@@ -22,7 +22,10 @@ $(function() {
 	function uploadImageClick(e)
 	{
 		e.preventDefault();
-		$(this).closest('.uploadimage-item').find(':file').click();
+
+		var $this = $(this);
+		if (!$this.hasClass('loading'))
+			$this.closest('.uploadimage-item').find(':file').click();
 	};
 
 	function uploadImageChange(e)
@@ -34,7 +37,7 @@ $(function() {
 		can &= window.FormData !== undefined;
 		can &= 'onload' in new XMLHttpRequest();
 
-		if (can) {
+		if (false && can) {
 			uploadImageFiles($uploadimage, this.files);
 		} else {
 			uploadImageLegacy($uploadimage);
@@ -196,6 +199,18 @@ $(function() {
 	//=============
 	//functionality
 
+	function loaderHide($item)
+	{
+		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
+		$item.addClass('hidden').find('input').not(':file').prop('disabled', disabled);
+	};
+
+	function loaderShow($item)
+	{
+		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
+		$item.removeClass('hidden').find('input').not(':file').prop('disabled', disabled);
+	};
+
 	function uploadImageFiles($uploadimage, files)
 	{
 		var $loaderItem = $uploadimage.find('.uploadimage-loader').closest('.uploadimage-item'),
@@ -247,18 +262,6 @@ $(function() {
 		showError($uploadimage, {'errorMaxSize': errorMaxSize, 'errorMaxCount': errorMaxCount});
 	};
 
-	function loaderHide($item)
-	{
-		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
-		$item.addClass('hidden').find('input').not(':file').prop('disabled', disabled);
-	};
-
-	function loaderShow($item)
-	{
-		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
-		$item.removeClass('hidden').find('input').not(':file').prop('disabled', disabled);
-	};
-
 	function uploadImageFile($loaderItem, w, h, name, file, url)
 	{
 		var $imageItem = $('<div />').addClass('uploadimage-item loading').css({'width': w, 'height': h}),
@@ -275,7 +278,7 @@ $(function() {
 
 					var data = JSON.parse(xhr.responseText);
 					if (data['items'].length) {
-						$item = $(data['items'][0]);
+						var $item = $(data['items'][0]);
 						$imageItem.replaceWith($item);
 						itemSetIndex($item);
 					} else {
@@ -294,6 +297,40 @@ $(function() {
 
 		xhr.open('POST', url, true);
 		xhr.send(formData);
+	};
+
+	function uploadImageLegacy($uploadimage)
+	{
+		var $loader = $uploadimage.find('.uploadimage-loader');
+
+		$loader.addClass('loading');
+		$uploadimage.closest('form').ajaxSubmit({
+			'url': $uploadimage.data('url'),
+			'dataType': 'json',
+			'error': function(xhr) {
+				alert(xhr.statusText);
+				$loader.removeClass('loading');
+			},
+			'success': function(data) {
+				var $loaderItem = $loader.closest('.uploadimage-item'), $item,
+					max = $uploadimage.data('maxCount') - $uploadimage.find('.uploadimage-item').length + 1;
+
+				data['items'].splice(max);
+				data['errorMaxCount'] = data['names'].slice(max);
+
+				$.each(data['items'], function(i, item) {
+					$item = $(item).insertBefore($loaderItem);
+					itemSetIndex($item);
+				});
+
+				if (data['items'].length == max)
+					loaderHide($loaderItem);
+
+				showError($uploadimage, data);
+
+				$loader.removeClass('loading');
+			}
+		});
 	};
 
 	function itemSetIndex($item)

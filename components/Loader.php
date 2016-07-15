@@ -76,11 +76,8 @@ class Loader extends Widget
 	{
 		parent::init();
 
-		if ($this->baseName === null || $this->fileKey === null || $this->width === null || $this->height === null)
-			throw new InvalidConfigException("Properties 'baseName', 'fileKey', 'width' and 'height' must be specified.");
-
-		if ($this->fileInputName === null)
-			$this->fileInputName = strtolower(str_replace(['[', ']'], ['_', ''], $this->name));
+		if ($this->baseName === null || $this->fileKey === null || $this->width === null || $this->height === null || $this->fileInputName === null)
+			throw new InvalidConfigException("Properties 'baseName', 'fileKey', 'width', 'height' and 'fileInputName' must be specified.");
 	}
 
 	/**

@@ -93,7 +93,7 @@ class UploadImages extends BaseUploadImage
 			'hidden' => $this->maxCount > 0 && sizeof($this->_items) >= $this->maxCount,
 			'disabledInput' => sizeof($this->_items),
 
-			'fileInputName' => $this->getFileInputName(),
+			'fileInputName' => $this->getFileInputName() . '[]',
 		]);
 	}
 
