@@ -354,7 +354,7 @@ class BaseUploadImage extends Widget
 	 * Save settings for controller.
 	 * @return string|boolean Token name. False if failed.
 	 */
-	protected function getToken()
+	private function getToken()
 	{
 		return Settings::save($this->getSettings());
 	}
@@ -363,7 +363,7 @@ class BaseUploadImage extends Widget
 	 * Settings, that will be used in controller.
 	 * @return array
 	 */
-	protected function getSettings()
+	private function getSettings()
 	{
 		return [
 			'name' => $this->getFileInputName(),
@@ -470,7 +470,7 @@ class BaseUploadImage extends Widget
 	 * @param Model|array|null $item Item for what buttons will returned. Item is null for new item.
 	 * @return array
 	 */
-	protected function getItemButtons($item)
+	private function getItemButtons($item)
 	{
 		return array_map(function($button) use ($item) {
 			return array_map(function($v) use ($item) {
