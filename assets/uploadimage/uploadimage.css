@@ -97,11 +97,12 @@
 }
 .uploadimage-btn.remove {
 	border-radius: 50%;
-	font-size: 20px;
-	font-weight: bold;
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+.uploadimage-btn.remove i {
+	font-size: 12px;
 }
 .uploadimage-btngroup {
 	position: absolute;
@@ -169,8 +170,6 @@
 	box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 	box-sizing: content-box;
 	color: #ccc;
-	font-size: 20px;
-	font-weight: bold;
 	height: 20px;
 	line-height: 20px;
 	opacity: 1;
@@ -180,6 +179,14 @@
 	text-shadow: none;
 	top: -15px;
 	width: 20px;
+}
+.uploadimage-preview .close i {
+	font-size: 12px;
+	left: 50%;
+	margin-left: -6px;
+	margin-top: -6px;
+	position: absolute;
+	top: 50%;
 }
 
 

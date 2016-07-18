@@ -363,7 +363,7 @@ $(function() {
 	function itemPreview($item)
 	{
 		var $overlay = $('<div class="uploadimage-overlay" />').click(itemPreviewClose),
-			$preview = $('<div class="uploadimage-preview"><div class="buffer"><img></div><img class="image"><div class="loading" /><a href="#" class="close">&times;</a></div>'),
+			$preview = $('<div class="uploadimage-preview"><div class="buffer"><img></div><img class="image"><div class="loading" /><a href="#" class="close"><i class="glyphicon glyphicon-remove"></i></a></div>'),
 			wWidth = $(window).width(),
 			wHeight = $(window).height();
 

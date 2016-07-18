@@ -321,7 +321,7 @@ class Item extends Widget
 	protected function renderButtons()
 	{
 		//remove
-		$buttons = Html::a('&times;', [
+		$buttons = Html::a('<i class="glyphicon glyphicon-remove"></i>', [
 			$this->baseRoute . 'remove',
 			'token' => $this->token,
 		], [
