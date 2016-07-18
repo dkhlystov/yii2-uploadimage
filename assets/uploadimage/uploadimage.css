@@ -121,6 +121,16 @@
 	bottom: 0;
 	left: 0;
 }
+@media (min-width: 1200px) {
+	.uploadimage-item .uploadimage-btn {
+		opacity: 0;
+		transition: opacity 0.2s;
+	}
+	.uploadimage-item:hover .uploadimage-btn {
+		opacity: 1;
+	}
+}
+
 
 
 
