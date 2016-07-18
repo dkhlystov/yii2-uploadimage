@@ -81,7 +81,7 @@
 /* buttons */
 .uploadimage-btn,
 .uploadimage-btn:focus {
-	background: rgba(0,0,0,0.7);
+	background: rgba(60,60,60,0.7);
 	border-radius: 2px;
 	color: #eee;
 	display: inline-block;
