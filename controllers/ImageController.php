@@ -91,7 +91,7 @@ class ImageController extends Controller
 
 		UploadImageHelper::$uploadPath = $settings['uploadPath'];
 
-		$file = UploadImageHelper::rotate($settings['file'], $settings['quality']);
+		$file = UploadImageHelper::rotate($settings['file'], $settings['maxImageWidth'], $settings['maxImageHeight'], $settings['quality']);
 
 		$thumb = null;
 		if ($settings['thumbKey'] !== null)
@@ -194,6 +194,8 @@ class ImageController extends Controller
 			'height' => $settings['height'],
 			'thumbWidth' => $settings['thumbWidth'],
 			'thumbHeight' => $settings['thumbHeight'],
+			'maxImageWidth' => $settings['maxImageWidth'],
+			'maxImageHeight' => $settings['maxImageHeight'],
 			'baseName' => $settings['baseName'],
 			'data' => $settings['data'],
 			'quality' => $settings['quality'],

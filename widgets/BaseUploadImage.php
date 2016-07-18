@@ -321,6 +321,8 @@ class BaseUploadImage extends Widget
 				'height' => $this->height,
 				'thumbWidth' => $this->thumbWidth,
 				'thumbHeight' => $this->thumbHeight,
+				'maxImageWidth' => $this->maxImageWidth,
+				'maxImageHeight' => $this->maxImageHeight,
 				'baseName' => $this->getItemBaseName($item),
 				'data' => $this->getItemData($item),
 				'buttons' => $this->getItemButtons($item),

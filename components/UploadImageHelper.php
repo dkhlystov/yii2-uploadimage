@@ -66,7 +66,7 @@ class UploadImageHelper
 	 * @param string $name Name of rotating file relative to web root.
 	 * @return string Name of rotated file relative to web root.
 	 */
-	public static function rotate($name, $quality)
+	public static function rotate($name, $maxImageWidth, $maxImageHeight, $quality)
 	{
 		$filename = Yii::getAlias('@webroot') . $name;
 
@@ -75,6 +75,7 @@ class UploadImageHelper
 
 		$image = new ImageFile($filename, ['jpegQuality' => $quality]);
 		$image->rotate(270);
+		$image->bounds($maxImageWidth, $maxImageHeight);
 		$image->save($newFilename);
 
 		return $newName;

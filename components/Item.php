@@ -110,6 +110,16 @@ class Item extends Widget
 	 */
 	public $thumbHeight;
 
+	/**
+	 * @var integer Maximun width of image. Image that larger that its value will be resized.
+	 */
+	public $maxImageWidth;
+
+	/**
+	 * @var integer Maximun height of image. Image that larger that its value will be resized.
+	 */
+	public $maxImageHeight;
+
 
 
 	/**
@@ -240,6 +250,8 @@ class Item extends Widget
 		$this->height = $settings['height'];
 		$this->thumbWidth = $settings['thumbWidth'];
 		$this->thumbHeight = $settings['thumbHeight'];
+		$this->maxImageWidth = $settings['maxImageWidth'];
+		$this->maxImageHeight = $settings['maxImageHeight'];
 		$this->baseName = $settings['baseName'];
 		$this->quality = $settings['quality'];
 		$this->uploadPath = $settings['uploadPath'];
@@ -263,6 +275,8 @@ class Item extends Widget
 			'height' => $this->height,
 			'thumbWidth' => $this->thumbWidth,
 			'thumbHeight' => $this->thumbHeight,
+			'maxImageWidth' => $this->maxImageWidth,
+			'maxImageHeight' => $this->maxImageHeight,
 			'baseName' => $this->baseName,
 			'quality' => $this->quality,
 			'uploadPath' => $this->uploadPath,
