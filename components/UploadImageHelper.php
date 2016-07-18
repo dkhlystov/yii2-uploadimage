@@ -5,6 +5,8 @@ namespace uploadimage\components;
 use Yii;
 use yii\web\UploadedFile;
 
+use helpers\ImageFile;
+
 /**
  * Helper for work with files and thumbs.
  */

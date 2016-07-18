@@ -7,6 +7,8 @@ use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\Html;
 
+use helpers\ImageFile;
+
 /**
  * Image item widget.
  */
