@@ -1,3 +1,9 @@
+/* widget */
+.uploadimage-widget {
+	overflow: hidden;
+}
+
+
 /* item container */
 .uploadimage-item {
 	background: #fff;
