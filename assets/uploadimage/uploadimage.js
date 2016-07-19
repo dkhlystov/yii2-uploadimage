@@ -37,7 +37,7 @@ $(function() {
 		can &= window.FormData !== undefined;
 		can &= 'onload' in new XMLHttpRequest();
 
-		if (false && can) {
+		if (can) {
 			uploadImageFiles($uploadimage, this.files);
 		} else {
 			uploadImageLegacy($uploadimage);
