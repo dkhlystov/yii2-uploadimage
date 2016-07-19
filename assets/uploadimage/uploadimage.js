@@ -199,16 +199,10 @@ $(function() {
 	//=============
 	//functionality
 
-	function loaderHide($item)
+	function checkLoaderData($loaderItem)
 	{
-		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
-		$item.addClass('hidden').find('input').not(':file').prop('disabled', disabled);
-	};
-
-	function loaderShow($item)
-	{
-		var disabled = $item.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
-		$item.removeClass('hidden').find('input').not(':file').prop('disabled', disabled);
+		var disabled = $loaderItem.closest('.uploadimage-widget').find('.uploadimage-item').length > 1;
+		$loaderItem.find('input').not(':file').prop('disabled', disabled);
 	};
 
 	function uploadImageFiles($uploadimage, files)
@@ -256,7 +250,10 @@ $(function() {
 
 		//loader visibility
 		if (maxCount !== null && count >= maxCount)
-			loaderHide($loaderItem);
+			$loaderItem.addClass('hidden');
+
+		//loader data
+		checkLoaderData($loaderItem);
 
 		//make and show error message
 		showError($uploadimage, {'errorMaxSize': errorMaxSize, 'errorMaxCount': errorMaxCount});
@@ -287,13 +284,15 @@ $(function() {
 					} else {
 						showError($imageItem.closest('.uploadimage-widget'), data);
 						$imageItem.remove();
-						loaderShow($loaderItem);
+						$loaderItem.removeClass('hidden');
+						checkLoaderData($loaderItem);
 					};
 
 				} else {
 					alert(xhr.statusText);
 					$imageItem.remove();
-					loaderShow($loaderItem);
+					$loaderItem.removeClass('hidden');
+					checkLoaderData($loaderItem);
 				};
 			};
 		};
@@ -330,7 +329,9 @@ $(function() {
 				});
 
 				if (data['items'].length == max)
-					loaderHide($loaderItem);
+					$loaderItem.addClass('hidden');
+
+				checkLoaderData($loaderItem);
 
 				showError($uploadimage, data);
 
@@ -528,12 +529,14 @@ $(function() {
 		if ($item.data('blocked'))
 			return;
 
-		var $loader = $item.closest('.uploadimage-widget').find('.uploadimage-loader').closest('.uploadimage-item');
+		var $loaderItem = $item.closest('.uploadimage-widget').find('.uploadimage-loader').closest('.uploadimage-item');
 
 		$.get($item.find('.uploadimage-btn.remove').attr('href'));
 
 		$item.remove();
-		loaderShow($loader);
+
+		$loaderItem.removeClass('hidden');
+		checkLoaderData($loaderItem);
 	};
 
 	function itemRotate($item)

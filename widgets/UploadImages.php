@@ -85,13 +85,12 @@ class UploadImages extends BaseUploadImage
 		return Loader::widget([
 			'baseName' => $this->getItemBaseName(false),
 			'fileKey' => $this->attribute,
-			'data' => $this->getItemData(null),
 
 			'width' => $this->width,
 			'height' => $this->height,
 			'multiple' => true,
 			'hidden' => $this->maxCount > 0 && sizeof($this->_items) >= $this->maxCount,
-			'disabledInput' => sizeof($this->_items),
+			'disabledInput' => sizeof($this->_items) > 0,
 
 			'fileInputName' => $this->getFileInputName() . '[]',
 		]);
