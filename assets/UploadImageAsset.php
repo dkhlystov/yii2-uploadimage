@@ -10,7 +10,7 @@ class UploadImageAsset extends AssetBundle
 		'uploadimage.css',
 	];
 	public $js = [
-		'uploadimage.js',
+		'uploadimage' . (YII_DEBUG ? '' : '.min') . '.js',
 		'jquery.form.min.js',
 	];
 	public $depends = [
