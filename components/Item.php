@@ -139,17 +139,17 @@ class Item extends Widget
 	/**
 	 * @var string Title for remove button.
 	 */
-	public $titleRemove = 'Remove';
+	public $titleRemove;
 
 	/**
 	 * @var string Title for rotate button.
 	 */
-	public $titleRotate = 'Rotate';
+	public $titleRotate;
 
 	/**
 	 * @var string Title for crop button.
 	 */
-	public $titleCrop = 'Crop';
+	public $titleCrop;
 
 	/**
 	 * @inheritdoc
@@ -165,6 +165,7 @@ class Item extends Widget
 			throw new InvalidConfigException("Properties 'baseName', 'fileKey', 'file', 'width' and 'height' must be specified.");
 
 		$this->checkThumbSize();
+		$this->checkTitles();
 
 		$this->saveToken();
 	}
@@ -198,6 +199,22 @@ class Item extends Widget
 
 		if ($this->thumbHeight === null)
 			$this->thumbHeight = $this->height;
+	}
+
+	/**
+	 * Check titles and set default values if needed.
+	 * @return void
+	 */
+	private function checkTitles()
+	{
+		if ($this->titleRemove === null)
+			$this->titleRemove = Yii::t('uploadimage', 'Remove');
+
+		if ($this->titleRotate === null)
+			$this->titleRotate = Yii::t('uploadimage', 'Rotate');
+
+		if ($this->titleCrop === null)
+			$this->titleCrop = Yii::t('uploadimage', 'Crop');
 	}
 
 	/**
@@ -304,7 +321,7 @@ class Item extends Widget
 	protected function renderButtons()
 	{
 		//remove
-		$buttons = Html::a('&times;', [
+		$buttons = Html::a('<i class="glyphicon glyphicon-remove"></i>', [
 			$this->baseRoute . 'remove',
 			'token' => $this->token,
 		], [

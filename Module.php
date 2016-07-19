@@ -16,6 +16,11 @@ class Module extends \yii\base\Module
 	public $uploadPath = '/upload';
 
 	/**
+	 * @var integer Max file size for upload in MB. Default is 64;
+	 */
+	public $maxFileSize = 64;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function init()

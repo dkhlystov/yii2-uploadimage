@@ -5,8 +5,8 @@ $(function() {
 	//======
 	//events
 
-	$(document).on('click', '.uploadimage-loader', uploadImageClick);
-	$(document).on('change', '.uploadimage-widget :file', uploadImageChange);
+	$(document).on('click', '.uploadimage-loader', loaderClick);
+	$(document).on('change', '.uploadimage-widget :file', fileChange);
 	$(document).on('click', '.uploadimage-image', imageClick);
 	$(document).on('mousedown', '.uploadimage-item.crop .uploadimage-image', imageCropMouseDown);
 	$(document).on('touchstart', '.uploadimage-item.crop .uploadimage-image', imageCropMouseDown);
@@ -19,7 +19,7 @@ $(function() {
 	//==============
 	//event handlers
 
-	function uploadImageClick(e)
+	function loaderClick(e)
 	{
 		e.preventDefault();
 
@@ -28,7 +28,7 @@ $(function() {
 			$this.closest('.uploadimage-item').find(':file').click();
 	};
 
-	function uploadImageChange(e)
+	function fileChange(e)
 	{
 		var $uploadimage = $(this).closest('.uploadimage-widget'),
 			can = true;
@@ -270,6 +270,9 @@ $(function() {
 
 		$imageItem.insertBefore($loaderItem);
 
+		if (('upload' in xhr) && ('onprogress' in xhr.upload))
+			uploadImageProgress($imageItem, xhr, file);
+
 		formData.append(name, file);
 
 		xhr.onreadystatechange = function() {
@@ -313,10 +316,13 @@ $(function() {
 			},
 			'success': function(data) {
 				var $loaderItem = $loader.closest('.uploadimage-item'), $item,
-					max = $uploadimage.data('maxCount') - $uploadimage.find('.uploadimage-item').length + 1;
+					max = $uploadimage.data('maxCount');
 
-				data['items'].splice(max);
-				data['errorMaxCount'] = data['names'].slice(max);
+				if (max) {
+					max -= $uploadimage.find('.uploadimage-item').length - 1;
+					data['items'].splice(max);
+					data['errorMaxCount'] = data['names'].slice(max);
+				}
 
 				$.each(data['items'], function(i, item) {
 					$item = $(item).insertBefore($loaderItem);
@@ -331,6 +337,17 @@ $(function() {
 				$loader.removeClass('loading');
 			}
 		});
+	};
+
+	function uploadImageProgress($item, xhr, file)
+	{
+		$item.append('<div class="uploadimage-progress"><div /></div>');
+
+		var $pos = $item.find('.uploadimage-progress > div');
+
+		xhr.upload.onprogress = function(e) {
+			$pos.css('width', (e.loaded / e.total * 100) + '%');
+		};
 	};
 
 	function itemSetIndex($item)
@@ -386,7 +403,7 @@ $(function() {
 	function itemPreview($item)
 	{
 		var $overlay = $('<div class="uploadimage-overlay" />').click(itemPreviewClose),
-			$preview = $('<div class="uploadimage-preview"><div class="buffer"><img></div><img class="image"><div class="loading" /><a href="#" class="close">&times;</a></div>'),
+			$preview = $('<div class="uploadimage-preview"><div class="buffer"><img></div><img class="image"><div class="loading" /><a href="#" class="close"><i class="glyphicon glyphicon-remove"></i></a></div>'),
 			wWidth = $(window).width(),
 			wHeight = $(window).height();
 
