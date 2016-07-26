@@ -175,8 +175,8 @@ Data management:
 * `item.data({name1: value1, ...})` set multiple data values.
 
 ```js
-$(document).on('ui-btnclick', '#images', imagesBtnClick(e, id, item, other) {
-    if (ui.id == 'main') {
+$(document).on('ui-btnclick', '#images', function(e, id, item, other) {
+    if (id == 'main') {
         item.button('main').addClass('active');
         item.data('main', 1);
         other.button('main').removeClass('active');
