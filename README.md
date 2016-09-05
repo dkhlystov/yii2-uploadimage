@@ -82,12 +82,12 @@ Default size of every item in widget is **112&times;84**. If you want to render 
 
 ## Maximum image size
 
-All images will be optimized while uploading. By default maximun width of uploaded image is **1000** and heigh is **750**. To change this values use `maxWidth` and `maxHeight` properties.
+All images will be optimized while uploading. By default maximun width of uploaded image is **1000** and heigh is **750**. To change this values use `maxImageWidth` and `maxImageHeight` properties.
 
 ```php
 <?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className(), [
-    'maxWidth' => 640,
-    'maxHeight' => 480,
+    'maxImageWidth' => 640,
+    'maxImageHeight' => 480,
 ]) ?>
 ```
 
