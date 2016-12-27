@@ -1,5 +1,5 @@
 <?php
-namespace uploadimage\assets;
+namespace dkhlystov\uploadimage\assets;
 
 use yii\web\AssetBundle;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace uploadimage\widgets;
+namespace dkhlystov\uploadimage\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
 
-use uploadimage\components\Loader;
+use dkhlystov\uploadimage\components\Loader;
 
 /**
  * Image upload widget for upload multiple images.

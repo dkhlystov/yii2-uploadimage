@@ -1,6 +1,6 @@
 <?php
 
-namespace uploadimage\components;
+namespace dkhlystov\uploadimage\components;
 
 use yii\base\InvalidConfigException;
 use yii\base\Widget;

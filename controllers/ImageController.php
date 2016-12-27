@@ -1,6 +1,6 @@
 <?php
 
-namespace uploadimage\controllers;
+namespace dkhlystov\uploadimage\controllers;
 
 use Yii;
 use yii\helpers\Json;
@@ -8,9 +8,9 @@ use yii\web\Controller;
 use yii\web\ServerErrorHttpException;
 use yii\web\UploadedFile;
 
-use uploadimage\components\Item;
-use uploadimage\components\Settings;
-use uploadimage\components\UploadImageHelper;
+use dkhlystov\uploadimage\components\Item;
+use dkhlystov\uploadimage\components\Settings;
+use dkhlystov\uploadimage\components\UploadImageHelper;
 
 /**
  * Controller for images uploading, removes, rotate and cropping.

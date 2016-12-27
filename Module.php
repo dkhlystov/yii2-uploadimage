@@ -1,6 +1,6 @@
 <?php
 
-namespace uploadimage;
+namespace dkhlystov\uploadimage;
 
 use Yii;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace uploadimage\widgets;
+namespace dkhlystov\uploadimage\widgets;
 
 use yii\helpers\Html;
 
-use uploadimage\components\Loader;
+use dkhlystov\uploadimage\components\Loader;
 
 /**
  * Image upload widget for upload single image.

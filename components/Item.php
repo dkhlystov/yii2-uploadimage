@@ -1,6 +1,6 @@
 <?php
 
-namespace uploadimage\components;
+namespace dkhlystov\uploadimage\components;
 
 use Yii;
 use yii\base\InvalidConfigException;

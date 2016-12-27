@@ -1,12 +1,10 @@
 <?php
-namespace uploadimage\assets;
+namespace dkhlystov\uploadimage\assets;
 
 use yii\web\AssetBundle;
 
 class UploadImageAsset extends AssetBundle
 {
-
-	public $sourcePath = '@uploadimage/assets/uploadimage';
 
 	public $css = [
 		'uploadimage.css',
@@ -24,6 +22,8 @@ class UploadImageAsset extends AssetBundle
 	public function init()
 	{
 		parent::init();
+
+		$this->sourcePath = __DIR__ . '/uploadimage';
 
 		$this->js[] = 'uploadimage' . (YII_DEBUG ? '' : '.min') . '.js';
 	}

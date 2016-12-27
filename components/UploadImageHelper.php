@@ -1,11 +1,11 @@
 <?php
 
-namespace uploadimage\components;
+namespace dkhlystov\uploadimage\components;
 
 use Yii;
 use yii\web\UploadedFile;
 
-use helpers\ImageFile;
+use dkhlystov\helpers\ImageFile;
 
 /**
  * Helper for work with files and thumbs.

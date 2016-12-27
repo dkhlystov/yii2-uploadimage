@@ -1,6 +1,6 @@
 <?php
 
-namespace uploadimage\widgets;
+namespace dkhlystov\uploadimage\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
@@ -9,9 +9,9 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use uploadimage\components\Item;
-use uploadimage\components\Settings;
-use uploadimage\assets\UploadImageAsset;
+use dkhlystov\uploadimage\components\Item;
+use dkhlystov\uploadimage\components\Settings;
+use dkhlystov\uploadimage\assets\UploadImageAsset;
 
 /**
  * Base upload image widget contains common functionality for one and multiple image upload.
@@ -50,7 +50,7 @@ class BaseUploadImage extends Widget
 
 
 	/**
-	 * @see \uploadimage\Module::$maxFileSize
+	 * @see dkhlystov\uploadimage\Module::$maxFileSize
 	 */
 	public $maxFileSize;
 
@@ -80,7 +80,7 @@ class BaseUploadImage extends Widget
 	public $quality = 80;
 
 	/**
-	 * @see \uploadimage\Module::$uploadPath
+	 * @see dkhlystov\uploadimage\Module::$uploadPath
 	 */
 	public $uploadPath;
 
@@ -209,14 +209,14 @@ class BaseUploadImage extends Widget
 		foreach (Yii::$app->modules as $id => $module) {
 			if ($module instanceof \yii\base\Module) {
 
-				if ($hasModule = ($module instanceof \uploadimage\Module)){
+				if ($hasModule = ($module instanceof \dkhlystov\uploadimage\Module)){
 					$uploadPath = $module->uploadPath;
 					$maxFileSize = $module->maxFileSize;
 				}
 
 			} elseif (is_array($module)) {
 
-				if ($hasModule = ($module['class'] === 'uploadimage\Module')) {
+				if ($hasModule = ($module['class'] === 'dkhlystov\uploadimage\Module')) {
 					if (isset($module['uploadPath']))
 						$uploadPath = $module['uploadPath'];
 					if (isset($module['maxFileSize']))
@@ -225,7 +225,7 @@ class BaseUploadImage extends Widget
 
 			} else {
 
-				$hasModule = ($module === 'uploadimage\Module');
+				$hasModule = ($module === 'dkhlystov\uploadimage\Module');
 
 			}
 
@@ -244,7 +244,7 @@ class BaseUploadImage extends Widget
 		if ($this->maxFileSize === null)
 			$this->maxFileSize = $maxFileSize;
 
-		\uploadimage\Module::addTranslation();
+		\dkhlystov\uploadimage\Module::addTranslation();
 	}
 
 	/**
