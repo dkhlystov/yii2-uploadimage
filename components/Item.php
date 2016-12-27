@@ -7,7 +7,7 @@ use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\Html;
 
-use helpers\ImageFile;
+use dkhlystov\helpers\ImageFile;
 
 /**
  * Image item widget.
@@ -19,8 +19,6 @@ class Item extends Widget
 	 * @var string Token associated with image. If not null, widget properties will be readed from settings.
 	 */
 	public $token;
-
-
 
 	/**
 	 * @var string Base name for form inputs.
