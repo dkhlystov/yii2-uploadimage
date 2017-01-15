@@ -52,7 +52,7 @@ $(function() {
 
 		var $item = $(this).closest('.uploadimage-item');
 
-		if (!$item.hasClass('crop'))
+		if (!$item.hasClass('crop') && !$item.closest('.uploadimage-widget').hasClass('nopreview'))
 			itemPreview($item);
 	};
 

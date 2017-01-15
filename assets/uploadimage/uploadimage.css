@@ -76,6 +76,9 @@
 	background-color: #f5f5f5;
 	position: relative;
 }
+.uploadimage-widget.nopreview .uploadimage-image {
+	cursor: default;
+}
 .uploadimage-image {
 	display: block;
 }

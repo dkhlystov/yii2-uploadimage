@@ -48,7 +48,6 @@ class BaseUploadImage extends Widget
 
 
 
-
 	/**
 	 * @see dkhlystov\uploadimage\Module::$maxFileSize
 	 */
@@ -73,6 +72,11 @@ class BaseUploadImage extends Widget
 	 * @var integer Thumb height. Widget height will be used if not set.
 	 */
 	public $thumbHeight;
+
+	/**
+	 * @var boolean Set this property to false if not needed to show full image in lightbox on click.
+	 */
+	public $showPreview = true;
 
 	/**
 	 * @var integer Image quality (for jpeg only). Defaults to 80.
@@ -175,7 +179,6 @@ class BaseUploadImage extends Widget
 		if ($this->_fileKey === null)
 			throw new \Exception('Property "_fileKey" is not implemented.');
 			
-
 		$items = $this->renderItems();
 		$loader = $this->renderLoader();
 
@@ -183,6 +186,8 @@ class BaseUploadImage extends Widget
 		Html::addCssClass($options, 'uploadimage-widget');
 		if (!isset($options['id']))
 			$options['id'] = $this->id;
+		if (!$this->showPreview)
+			Html::addCssClass($options, 'nopreview');
 
 		echo Html::tag('div', $items . $loader, $options);
 	}
@@ -373,6 +378,7 @@ class BaseUploadImage extends Widget
 			'maxImageHeight' => $this->maxImageHeight,
 			'thumbWidth' => $this->thumbWidth,
 			'thumbHeight' => $this->thumbHeight,
+			'showPreview' => $this->showPreview,
 			'quality' => $this->quality,
 			'maxFileSize' => $this->maxFileSize * 1024 * 1024,
 			'uploadPath' => $this->uploadPath,
