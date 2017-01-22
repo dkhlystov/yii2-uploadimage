@@ -19,12 +19,12 @@ to the require section of your `composer.json` file.
 
 # Usage
 
-For using widget at first you need to add `uploadimage\Module` to your application config:
+For using widget at first you need to add `dkhlystov\uploadimage\Module` to your application config:
 
 ```php
     'modules' => [
         //...
-        'uploadimage' => 'uploadimage\Module',
+        'uploadimage' => 'dkhlystov\uploadimage\Module',
     ],
 ```
 
@@ -33,7 +33,7 @@ For using widget at first you need to add `uploadimage\Module` to your applicati
 Upload single image to model attribute:
 
 ```php
-<?= \uploadimage\widgets\UploadImage::widget([
+<?= \dkhlystov\uploadimage\widgets\UploadImage::widget([
         'model' => $model,
         'attribute' => 'image',
 ]); ?>
@@ -42,13 +42,13 @@ Upload single image to model attribute:
 With `ActiveForm`:
 
 ```php
-<?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className()) ?>
+<?= $form->field($model, 'image')->widget(\dkhlystov\uploadimage\widgets\UploadImage::className()) ?>
 ```
 
 If thumbnail needed:
 
 ```php
-<?= \uploadimage\widgets\UploadImage::widget([
+<?= \dkhlystov\uploadimage\widgets\UploadImage::widget([
         'model' => $model,
         'attribute' => 'image',
         'thumbAttribute' => 'thumb',
@@ -60,7 +60,7 @@ If thumbnail needed:
 Upload multiple images as array to model attribute. Property `fileKey` is required:
 
 ```php
-<?= \uploadimage\widgets\UploadImages::widget([
+<?= \dkhlystov\uploadimage\widgets\UploadImages::widget([
         'model' => $model,
         'attribute' => 'images',
         'fileKey' => 'file',
@@ -74,7 +74,7 @@ If you need to create thumbnail use `thumbKey` property. To limit image count us
 Default size of every item in widget is **112&times;84**. If you want to render widget with other size use `width` and `height` properties.
 
 ```php
-<?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className(), [
+<?= $form->field($model, 'image')->widget(\dkhlystov\uploadimage\widgets\UploadImage::className(), [
     'width' => 100,
     'height' => 100,
 ]) ?>
@@ -85,7 +85,7 @@ Default size of every item in widget is **112&times;84**. If you want to render 
 All images will be optimized while uploading. By default maximun width of uploaded image is **1000** and heigh is **750**. To change this values use `maxImageWidth` and `maxImageHeight` properties.
 
 ```php
-<?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className(), [
+<?= $form->field($model, 'image')->widget(\dkhlystov\uploadimage\widgets\UploadImage::className(), [
     'maxImageWidth' => 640,
     'maxImageHeight' => 480,
 ]) ?>
@@ -96,7 +96,7 @@ All images will be optimized while uploading. By default maximun width of upload
 When thumbnails uses, its size is similar to widget item size. To change it, use `thumbWidth` and `thumbHeight` properties.
 
 ```php
-<?= $form->field($model, 'image')->widget(\uploadimage\widgets\UploadImage::className(), [
+<?= $form->field($model, 'image')->widget(\dkhlystov\uploadimage\widgets\UploadImage::className(), [
     'thumbAttribute' => 'thumb',
     'thumbWidth' => 200,
     'thumbHeight' => 150,
@@ -108,7 +108,7 @@ When thumbnails uses, its size is similar to widget item size. To change it, use
 Use `data` property to add extra data to every image item in widget. You can use simple array or `Closure` for this property:
 
 ```php
-<?= \uploadimage\widgets\UploadImages::widget([
+<?= \dkhlystov\uploadimage\widgets\UploadImages::widget([
     'model' => $model,
     'attribute' => 'images',
     'fileKey' => 'file',
@@ -129,7 +129,7 @@ For working with buttons there are two steps: at first you should to declare but
 
 To add custom buttons use `buttons` property. This is array where key is button identifier and value is buttons configuration.
 ```php
-<?= \uploadimage\widgets\UploadImages::widget([
+<?= \dkhlystov\uploadimage\widgets\UploadImages::widget([
     'model' => $model,
     'attribute' => 'images',
     'id' => 'images',
