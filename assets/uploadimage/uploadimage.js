@@ -257,8 +257,6 @@ $(function() {
 
 		//make and show error message
 		showError($uploadimage, {'errorMaxSize': errorMaxSize, 'errorMaxCount': errorMaxCount});
-
-		$uploadimage.trigger('ui-imgload');
 	};
 
 	function uploadImageFile($loaderItem, w, h, name, file, url)
@@ -339,7 +337,6 @@ $(function() {
 
 				$loader.removeClass('loading');
 
-				$uploadimage.trigger('ui-imgload');
 			}
 		});
 	};
@@ -357,13 +354,16 @@ $(function() {
 
 	function itemSetIndex($item)
 	{
-		var $inputs = $item.find('input');
+		var $uploadimage = $item.closest('.uploadimage-widget'),
+			$inputs = $item.find('input');
+
+		$uploadimage.trigger('ui-imgload');
 
 		if (!/\[\]\[[\da-z_]+\]$/i.test($inputs.attr('name')))
 			return;
 
 		var idx = -1, m, i;
-		$item.closest('.uploadimage-widget').find('input').not(':file').each(function() {
+		$uploadimage.find('input').not(':file').each(function() {
 			if (m = this.name.match(/\[(\d+)\]\[[\da-z_]+\]$/i)) {
 				if ((i = parseInt(m[1])) > idx) idx = i;
 			}
