@@ -257,6 +257,8 @@ $(function() {
 
 		//make and show error message
 		showError($uploadimage, {'errorMaxSize': errorMaxSize, 'errorMaxCount': errorMaxCount});
+
+		$uploadimage.trigger('ui-imgload');
 	};
 
 	function uploadImageFile($loaderItem, w, h, name, file, url)
@@ -336,6 +338,8 @@ $(function() {
 				showError($uploadimage, data);
 
 				$loader.removeClass('loading');
+
+				$uploadimage.trigger('ui-imgload');
 			}
 		});
 	};
