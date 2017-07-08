@@ -314,7 +314,11 @@ class Item extends Widget
 		if ($thumb === null)
 			$thumb = $this->file;
 
-		list($w, $h) = getimagesize(Yii::getAlias('@webroot') . $thumb);
+		$size = @getimagesize(Yii::getAlias('@webroot') . $thumb);
+		if ($size === false) 
+			$size = [$this->width, $this->height];
+
+		list($w, $h) = $size;
 		list($width, $height) = ImageFile::getBounds($w, $h, $this->width, $this->height);
 		$left = ($this->width - $width) / 2;
 		$top = ($this->height - $height) / 2;
