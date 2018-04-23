@@ -16,8 +16,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "dkhlystov/yii2-imagefile": "*",
-        "bower-asset/fontawesome": "*"
+        "dkhlystov/yii2-imagefile": "*"
     },
     "autoload": {
         "psr-4": {

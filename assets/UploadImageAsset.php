@@ -16,7 +16,6 @@ class UploadImageAsset extends AssetBundle
 
 	public $depends = [
 		'yii\web\JqueryAsset',
-		'dkhlystov\uploadimage\assets\FontAwesomeAsset'
 	];
 
 	public function init()
