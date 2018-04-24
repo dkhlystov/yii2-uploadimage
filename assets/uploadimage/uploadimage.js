@@ -426,7 +426,7 @@ $(function() {
 			itemPreviewClose();
 		});
 
-		$preview.find('.buffer img').load(function() {
+		$preview.find('.buffer img').on('load', function() {
 			$preview.find('.loading').css('opacity', 0);
 			$preview.find('.image').attr('src', this.src);
 
@@ -585,7 +585,7 @@ $(function() {
 			'width': 1
 		}).appendTo('body');
 
-		$buffer.find('img').load(function() {
+		$buffer.find('img').on('load', function() {
 			var $this = $(this),
 				$crop = $item.find('.uploadimage-crop'),
 				$cropImg = $crop.find('img'),
