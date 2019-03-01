@@ -24,7 +24,7 @@ class UploadImageAsset extends AssetBundle
 
         $this->sourcePath = __DIR__ . '/uploadimage';
 
-        $this->js[] = 'uploadimage' . (YII_DEBUG ? '' : '.min') . '.js';
+        $this->js[] = 'uploadimage.js';
     }
 
 }
