@@ -132,7 +132,7 @@ class Loader extends Widget
      */
     protected function renderLoader()
     {
-        $options = ['class' => 'glyphicon glyphicon-plus'];
+        $options = ['class' => 'fas fa-plus'];
         $fontSize = min($this->width, $this->height) / 2;
         Html::addCssStyle($options, "font-size: {$fontSize}px;");
 

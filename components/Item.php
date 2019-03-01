@@ -339,7 +339,7 @@ class Item extends Widget
     protected function renderButtons()
     {
         //remove
-        $buttons = Html::a('<i class="glyphicon glyphicon-remove"></i>', [
+        $buttons = Html::a('<i class="fas fa-times"></i>', [
             $this->baseRoute . 'remove',
             'token' => $this->token,
         ], [
@@ -350,7 +350,7 @@ class Item extends Widget
         //actions
         $group = [];
         //rotate
-        $group[] = Html::a('<i class="glyphicon glyphicon-repeat"></i>', [
+        $group[] = Html::a('<i class="fas fa-redo"></i>', [
             $this->baseRoute . 'rotate',
             'token' => $this->token,
         ], [
@@ -359,7 +359,7 @@ class Item extends Widget
         ]);
         //crop
         if ($this->thumbKey !== null) {
-            $group[] = Html::a('<i class="glyphicon glyphicon-resize-full"></i>', [
+            $group[] = Html::a('<i class="fas fa-crop-alt"></i>', [
                 $this->baseRoute . 'crop',
                 'token' => $this->token,
             ], [

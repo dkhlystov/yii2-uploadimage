@@ -95,10 +95,13 @@
 	background: rgba(60,60,60,0.7);
 	border-radius: 2px;
 	color: #eee;
-	display: inline-block;
+	display: block;
+	float: left;
+	font-size: 14px;
 	height: 20px;
-	line-height: 20px;
+	line-height: 1;
 	margin-right: 1px;
+	padding: 3px;
 	text-align: center;
 	text-decoration: none !important;
 	width: 20px;

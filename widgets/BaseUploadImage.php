@@ -11,6 +11,7 @@ use yii\helpers\Url;
 
 use dkhlystov\uploadimage\components\Item;
 use dkhlystov\uploadimage\components\Settings;
+use dkhlystov\uploadimage\assets\FontAwesomeAsset;
 use dkhlystov\uploadimage\assets\UploadImageAsset;
 
 /**
@@ -168,6 +169,7 @@ class BaseUploadImage extends Widget
 		$this->checkMaxFileSize();
 		$this->prepareMessags();
 
+		FontAwesomeAsset::register($this->getView());
 		UploadImageAsset::register($this->getView());
 	}
 
